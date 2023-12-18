@@ -13,7 +13,7 @@ class RequestsCodeInjector
      * @param string $modelName
      * @return string
      */
-    protected static function injectStoreRequestCode(string $modelName)
+    public static function injectStoreRequestCode(string $modelName): string
     {
         /**
          * Get the fillables of the model
@@ -53,7 +53,7 @@ class RequestsCodeInjector
      * @param string $modelName
      * @return string
      */
-    protected static function injectUpdateRequestCode(string $modelName): string
+    public static function injectUpdateRequestCode(string $modelName): string
     {
         /**
          * Get the fillables of the model

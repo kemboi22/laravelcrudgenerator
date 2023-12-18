@@ -6,6 +6,7 @@ use Kemboielvis\Laravelcrudgenerator\Helpers\ClassGetters;
 use Kemboielvis\Laravelcrudgenerator\Helpers\Exists;
 use Kemboielvis\Laravelcrudgenerator\Helpers\GenerateClasses;
 use Kemboielvis\Laravelcrudgenerator\Helpers\Injector\Controllers\ControllerCodeInjector;
+use Kemboielvis\Laravelcrudgenerator\Helpers\Injector\Requests\RequestsCodeInjector;
 use ReflectionClass;
 
 class CodeInjector
@@ -18,9 +19,10 @@ class CodeInjector
     }
 
     /**
+     * @return void
      * @throws \ReflectionException
      */
-    public function injectController()
+    public function injectController(): void
     {
         /**
          * Check if the controller exists
@@ -44,8 +46,7 @@ class CodeInjector
         /**
          * Replace the content of the index method
          */
-        if ($reflection->getMethod('index'))
-        {
+        if ($reflection->getMethod('index')) {
 
             /**
              * Store the Generated Code
@@ -62,8 +63,7 @@ class CodeInjector
         /**
          * Get the store method
          */
-        if ($reflection->getMethod('store'))
-        {
+        if ($reflection->getMethod('store')) {
 
             /**
              * Store the Generated Code
@@ -80,8 +80,7 @@ class CodeInjector
         /**
          * Replace the content of the show method
          */
-        if ($reflection->getMethod('show'))
-        {
+        if ($reflection->getMethod('show')) {
 
             /**
              * Store the Generated Code
@@ -98,8 +97,7 @@ class CodeInjector
         /**
          * Replace the content of the update method
          */
-        if ($reflection->getMethod('update'))
-        {
+        if ($reflection->getMethod('update')) {
 
             /**
              * Store the Generated Code
@@ -116,8 +114,7 @@ class CodeInjector
         /**
          * Replace the content of the destroy method
          */
-        if ($reflection->getMethod('destroy'))
-        {
+        if ($reflection->getMethod('destroy')) {
 
             /**
              * Store the Generated Code
@@ -130,6 +127,70 @@ class CodeInjector
             $currentContent = $this->replaceMethodContents($reflection, $generatedCode, 'destroy');
 
         }
+    }
+
+    /**
+     * @throws \ReflectionException
+     */
+    public function injectRequest() : void
+    {
+        /**
+         * Check if the request exists
+         * If it does not exist, generate it
+         */
+        $storeRequestExists = Exists::checkIfStoreRequestExists($this->modelName);
+        /**
+         * Check if the request exists
+         * If it does not exist, generate it
+         */
+        $updateRequestExists = Exists::checkIfUpdateRequestsExists($this->modelName);
+
+        if (!$storeRequestExists && !$updateRequestExists) {
+            GenerateClasses::generateRequests($this->modelName);
+        }
+
+        /**
+         * Get the reflection class
+         */
+
+        $storeReflectionClass = new \ReflectionClass(ClassGetters::getStoreRequestClass($this->modelName));
+        $updateReflectionClass = new \ReflectionClass(ClassGetters::getUpdateRequestClass($this->modelName));
+
+        /**
+         * Check if rules exists
+         */
+        if ($storeReflectionClass->getMethod('rules'))
+        {
+            /**
+             * Get the Generated Code
+             */
+            $generatedCode = RequestsCodeInjector::injectStoreRequestCode($this->modelName);
+
+            /**
+             * Get the current content of the store method And Replace it with the generated code
+             */
+            $currentContent = $this->replaceMethodContents($storeReflectionClass, $generatedCode, 'rules');
+
+        }
+
+        /**
+         * Check if rules exists
+         */
+
+        if ($updateReflectionClass->getMethod('rules'))
+        {
+            /**
+             * Get the Generated Code
+             */
+            $generatedCode = RequestsCodeInjector::injectUpdateRequestCode($this->modelName);
+
+            /**
+             * Get the current content of the store method And Replace it with the generated code
+             */
+            $currentContent = $this->replaceMethodContents($updateReflectionClass, $generatedCode, 'rules');
+        }
+
+
     }
 
     /**
@@ -157,7 +218,7 @@ class CodeInjector
         /**
          * Get the method content
          */
-        $currentContent = implode('', array_slice(file($reflection->getFileName()), $startLine - 1, $endLine - $startLine+1));
+        $currentContent = implode('', array_slice(file($reflection->getFileName()), $startLine - 1, $endLine - $startLine + 1));
 
 
         /**
