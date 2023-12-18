@@ -10,6 +10,8 @@ class GenerateCrudFromModel extends Command
     protected $signature = 'crud:generate {model}';
     protected $description = 'Generate CRUD Operations from model';
 
+
+
     /**
      * @throws \ReflectionException
      */
