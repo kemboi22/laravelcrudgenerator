@@ -3,12 +3,16 @@
 namespace Kemboielvis\Laravelcrudgenerator\Commands;
 
 use Illuminate\Console\Command;
+use Kemboielvis\Laravelcrudgenerator\Helpers\Injector\CodeInjector;
 
 class GenerateCrudFromModel extends Command
 {
     protected $signature = 'crud:generate {model}';
     protected $description = 'Generate CRUD Operations from model';
 
+    /**
+     * @throws \ReflectionException
+     */
     public function handle()
     {
         /**
@@ -28,11 +32,14 @@ class GenerateCrudFromModel extends Command
             return;
         }
         $this->info('Generating CRUD Operations from model ' . $modelName);
-        /**
-         * Get fillable fields
-         */
 
-        $fillableFields = implode(',', (new $modelClass)->getFillable());
+        $this->info("Fillable Fields: " . implode(', ', (new $modelClass)->getFillable()));
+
+        $code = new CodeInjector($modelName);
+        $code->injectController();
+        $code->injectRequest();
+
+        $this->info('CRUD Operations generated successfully');
 
     }
 
