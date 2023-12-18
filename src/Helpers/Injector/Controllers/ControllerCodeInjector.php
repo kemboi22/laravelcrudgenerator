@@ -12,7 +12,7 @@ class ControllerCodeInjector
      * @param string $modelName
      * @return string
      */
-    protected static function injectIndexCode(string $modelName): string
+    public static function injectIndexCode(string $modelName): string
     {
         /**
          * return the generated code
@@ -34,7 +34,7 @@ class ControllerCodeInjector
      * @param string $modelName
      * @return string
      */
-    protected static function injectStoreCode(string $modelName): string
+    public static function injectStoreCode(string $modelName): string
     {
         /**
          * Get the fillables of the model
@@ -77,7 +77,7 @@ class ControllerCodeInjector
      * @return string
      */
 
-    protected static function injectShowCode(string $modelName): string
+    public static function injectShowCode(string $modelName): string
     {
         /**
          * return  the generated show code
@@ -106,7 +106,7 @@ class ControllerCodeInjector
      * @return string
      */
 
-    protected static function injectUpdateCode(string $modelName): string
+    public static function injectUpdateCode(string $modelName): string
     {
         /**
          * Get the fillables of the model
@@ -154,7 +154,7 @@ class ControllerCodeInjector
      * @return string
      */
 
-    protected static function injectDestroyCode(string $modelName): string
+    public static function injectDestroyCode(string $modelName): string
     {
         /**
          * return  the generated destroy code
