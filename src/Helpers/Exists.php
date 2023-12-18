@@ -14,12 +14,13 @@ class Exists
 
     public static function checkIfControllerExits(string $modelName): bool
     {
-        $controllerClass = "App\\Http\\Controllers\\$modelName"."Controller";
+        $controllerClass = "App\\Http\\Controllers\\$modelName" . "Controller";
         if (!class_exists($controllerClass)) {
             return false;
         }
         return true;
     }
+
     /**
      * Check if a Store Requests exists
      *
@@ -29,12 +30,13 @@ class Exists
 
     public static function checkIfStoreRequestExists(string $modelName): bool
     {
-        $storeRequestClass = "App\\Http\\Requests\\Store"."$modelName"."Request";
+        $storeRequestClass = "App\\Http\\Requests\\Store" . "$modelName" . "Request";
         if (!class_exists($storeRequestClass)) {
             return false;
         }
         return true;
     }
+
     /**
      * Check if a Update Requests exists
      *
@@ -42,9 +44,9 @@ class Exists
      * @return boolean
      */
 
-    public static function checkIfUpdateRequestsExists(string $modelName) : bool
+    public static function checkIfUpdateRequestsExists(string $modelName): bool
     {
-        $updateRequestClass = "App\\Http\\Requests\\Update"."$modelName"."Request";
+        $updateRequestClass = "App\\Http\\Requests\\Update" . "$modelName" . "Request";
         if (!class_exists($updateRequestClass)) {
             return false;
         }

@@ -3,7 +3,6 @@
 namespace Kemboielvis\Laravelcrudgenerator\Commands;
 
 use Illuminate\Console\Command;
-use Illuminate\Support\Facades\Artisan;
 
 class GenerateCrudFromModel extends Command
 {
@@ -28,7 +27,7 @@ class GenerateCrudFromModel extends Command
             $this->error('Model does not exist');
             return;
         }
-        $this->info('Generating CRUD Operations from model '.$modelName);
+        $this->info('Generating CRUD Operations from model ' . $modelName);
         /**
          * Get fillable fields
          */
