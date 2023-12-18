@@ -14,5 +14,12 @@
   ],
   "require": {
     "illuminate/console": "^10.37"
+  },
+  "extra": {
+    "laravel": {
+      "providers": [
+        "Kemboielvis\\Laravelcrudgenerator\\LaravelcrudgeneratorServiceProvider"
+      ]
+    }
   }
 }
