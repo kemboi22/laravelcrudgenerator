@@ -13,7 +13,7 @@ class Fillables
     public static function getFillables(string $modelName): array
     {
         $model = "App\\Models\\$modelName";
-        return $model::getFillable();
+        return (new  $model)->getFillable();
 
     }
 
