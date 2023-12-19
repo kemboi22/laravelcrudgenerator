@@ -56,7 +56,7 @@ class CodeInjector
             /**
              * Get the current content of the store method And Replace it with the generated code
              */
-            $this->replaceMethodContents($reflection, $generatedCode, 'index');
+            $currentContent = $this->replaceMethodContents($reflection, $generatedCode, 'index');
 
         }
 
@@ -72,7 +72,7 @@ class CodeInjector
             /**
              * Get the current content of the store method And Replace it with the generated code
              */
-            $this->replaceMethodContents($reflection, $generatedCode, 'store');
+            $currentContent = $this->replaceMethodContents($reflection, $generatedCode, 'store');
 
         }
 
@@ -89,7 +89,7 @@ class CodeInjector
             /**
              * Get the current content of the store method And Replace it with the generated code
              */
-            $this->replaceMethodContents($reflection, $generatedCode, 'show');
+            $currentContent = $this->replaceMethodContents($reflection, $generatedCode, 'show');
 
         }
 
@@ -106,7 +106,7 @@ class CodeInjector
             /**
              * Get the current content of the store method And Replace it with the generated code
              */
-            $this->replaceMethodContents($reflection, $generatedCode, 'update');
+            $currentContent = $this->replaceMethodContents($reflection, $generatedCode, 'update');
 
         }
 
@@ -123,7 +123,7 @@ class CodeInjector
             /**
              * Get the current content of the store method And Replace it with the generated code
              */
-            $this->replaceMethodContents($reflection, $generatedCode, 'destroy');
+            $currentContent = $this->replaceMethodContents($reflection, $generatedCode, 'destroy');
 
         }
     }
@@ -131,7 +131,7 @@ class CodeInjector
     /**
      * @throws \ReflectionException
      */
-    public function injectRequest(): void
+    public function injectRequest() : void
     {
         /**
          * Check if the request exists
@@ -158,7 +158,8 @@ class CodeInjector
         /**
          * Check if rules exists
          */
-        if ($storeReflectionClass->getMethod('rules')) {
+        if ($storeReflectionClass->getMethod('rules'))
+        {
             /**
              * Get the Generated Code
              */
@@ -167,7 +168,7 @@ class CodeInjector
             /**
              * Get the current content of the store method And Replace it with the generated code
              */
-            $this->replaceMethodContents($storeReflectionClass, $generatedCode, 'rules');
+            $currentContent = $this->replaceMethodContents($storeReflectionClass, $generatedCode, 'rules');
 
         }
 
@@ -175,7 +176,8 @@ class CodeInjector
          * Check if rules exists
          */
 
-        if ($updateReflectionClass->getMethod('rules')) {
+        if ($updateReflectionClass->getMethod('rules'))
+        {
             /**
              * Get the Generated Code
              */
@@ -184,7 +186,7 @@ class CodeInjector
             /**
              * Get the current content of the store method And Replace it with the generated code
              */
-            $this->replaceMethodContents($updateReflectionClass, $generatedCode, 'rules');
+            $currentContent = $this->replaceMethodContents($updateReflectionClass, $generatedCode, 'rules');
         }
 
 
@@ -193,7 +195,7 @@ class CodeInjector
     /**
      * @throws \ReflectionException
      */
-    private function replaceMethodContents(ReflectionClass $reflection, $content, string $methodName): void
+    private function replaceMethodContents(ReflectionClass $reflection, $content, string $methodName): array|string
     {
         /**
          * Get the method
@@ -221,15 +223,25 @@ class CodeInjector
          * Modify specific lines
          */
 
-        for ($i = $startLine; $i <= $endLine; $i++) {
-            $fileLines[$i - 1] = $content;
+        for ($i = $startLine-1; $i < $endLine+1; $i++)
+        {
+            $fileLines[$i-1] = $content;
         }
-        print_r($fileLines);
 
         /**
-         * Write the new content to the file
+         * Get the method content
          */
-        file_put_contents($reflection->getFileName(), implode('', $fileLines));
+        $currentContent = implode('', array_slice(file($reflection->getFileName()), $startLine - 1, $endLine - $startLine + 1));
+
+        /**
+         * Get the current content
+         */
+
+
+        /**
+         * Replace the content
+         */
+        return str_replace($currentContent, $content, $currentContent);
 
 
     }
