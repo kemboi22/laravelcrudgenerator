@@ -52,12 +52,11 @@ class CodeInjector
              * Store the Generated Code
              */
             $generatedCode = ControllerCodeInjector::injectIndexCode($this->modelName);
-            print_r($generatedCode);
 
             /**
              * Get the current content of the store method And Replace it with the generated code
              */
-            $currentContent = $this->replaceMethodContents($reflection, $generatedCode, 'index');
+            $this->replaceMethodContents($reflection, $generatedCode, 'index');
 
         }
 
@@ -70,11 +69,10 @@ class CodeInjector
              * Store the Generated Code
              */
             $generatedCode = ControllerCodeInjector::injectStoreCode($this->modelName);
-            print_r($generatedCode);
             /**
              * Get the current content of the store method And Replace it with the generated code
              */
-            $currentContent = $this->replaceMethodContents($reflection, $generatedCode, 'store');
+            $this->replaceMethodContents($reflection, $generatedCode, 'store');
 
         }
 
@@ -91,7 +89,7 @@ class CodeInjector
             /**
              * Get the current content of the store method And Replace it with the generated code
              */
-            $currentContent = $this->replaceMethodContents($reflection, $generatedCode, 'show');
+            $this->replaceMethodContents($reflection, $generatedCode, 'show');
 
         }
 
@@ -108,7 +106,7 @@ class CodeInjector
             /**
              * Get the current content of the store method And Replace it with the generated code
              */
-            $currentContent = $this->replaceMethodContents($reflection, $generatedCode, 'update');
+            $this->replaceMethodContents($reflection, $generatedCode, 'update');
 
         }
 
@@ -125,7 +123,7 @@ class CodeInjector
             /**
              * Get the current content of the store method And Replace it with the generated code
              */
-            $currentContent = $this->replaceMethodContents($reflection, $generatedCode, 'destroy');
+            $this->replaceMethodContents($reflection, $generatedCode, 'destroy');
 
         }
     }
@@ -133,7 +131,7 @@ class CodeInjector
     /**
      * @throws \ReflectionException
      */
-    public function injectRequest() : void
+    public function injectRequest(): void
     {
         /**
          * Check if the request exists
@@ -160,18 +158,16 @@ class CodeInjector
         /**
          * Check if rules exists
          */
-        if ($storeReflectionClass->getMethod('rules'))
-        {
+        if ($storeReflectionClass->getMethod('rules')) {
             /**
              * Get the Generated Code
              */
             $generatedCode = RequestsCodeInjector::injectStoreRequestCode($this->modelName);
 
-            print_r($generatedCode);
             /**
              * Get the current content of the store method And Replace it with the generated code
              */
-            $currentContent = $this->replaceMethodContents($storeReflectionClass, $generatedCode, 'rules');
+            $this->replaceMethodContents($storeReflectionClass, $generatedCode, 'rules');
 
         }
 
@@ -179,8 +175,7 @@ class CodeInjector
          * Check if rules exists
          */
 
-        if ($updateReflectionClass->getMethod('rules'))
-        {
+        if ($updateReflectionClass->getMethod('rules')) {
             /**
              * Get the Generated Code
              */
@@ -189,7 +184,7 @@ class CodeInjector
             /**
              * Get the current content of the store method And Replace it with the generated code
              */
-            $currentContent = $this->replaceMethodContents($updateReflectionClass, $generatedCode, 'rules');
+            $this->replaceMethodContents($updateReflectionClass, $generatedCode, 'rules');
         }
 
 
@@ -198,7 +193,7 @@ class CodeInjector
     /**
      * @throws \ReflectionException
      */
-    private function replaceMethodContents(ReflectionClass $reflection, $content, string $methodName): array|string
+    private function replaceMethodContents(ReflectionClass $reflection, $content, string $methodName): void
     {
         /**
          * Get the method
@@ -218,15 +213,22 @@ class CodeInjector
         $endLine = $method->getEndLine();
 
         /**
-         * Get the method content
+         * Get file lines
          */
-        $currentContent = implode('', array_slice(file($reflection->getFileName()), $startLine - 1, $endLine - $startLine + 1));
-
+        $fileLines = file($reflection->getFileName());
 
         /**
-         * Replace the content
+         * Modify specific lines
          */
-        return str_replace($currentContent, $content, $currentContent);
+
+        for ($i = $startLine - 1; $i < $endLine + 1; $i++) {
+            $fileLines[$i - 1] = $content;
+        }
+
+        /**
+         * Write the new content to the file
+         */
+        file_put_contents($reflection->getFileName(), implode('', $fileLines));
 
 
     }
