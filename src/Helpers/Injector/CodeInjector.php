@@ -221,9 +221,10 @@ class CodeInjector
          * Modify specific lines
          */
 
-        for ($i = $startLine - 1; $i < $endLine + 1; $i++) {
+        for ($i = $startLine; $i <= $endLine; $i++) {
             $fileLines[$i - 1] = $content;
         }
+        print_r($fileLines);
 
         /**
          * Write the new content to the file
