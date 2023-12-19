@@ -14,7 +14,6 @@ class Fillables
     {
         $model = "App\\Models\\$modelName";
         return (new  $model)->getFillable();
-
     }
 
 }
