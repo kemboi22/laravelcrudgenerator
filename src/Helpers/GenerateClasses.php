@@ -32,7 +32,10 @@ class GenerateClasses
     public static function generateRequests(string $modelName): void
     {
         Artisan::call('make:request', [
-            'name' => $modelName . 'Request'
+            'name' => $modelName . 'StoreRequest'
+        ]);
+        Artisan::call('make:request', [
+            'name' => $modelName . 'UpdateRequest'
         ]);
     }
 
