@@ -52,6 +52,7 @@ class CodeInjector
              * Store the Generated Code
              */
             $generatedCode = ControllerCodeInjector::injectIndexCode($this->modelName);
+            print_r($generatedCode);
 
             /**
              * Get the current content of the store method And Replace it with the generated code
@@ -69,7 +70,7 @@ class CodeInjector
              * Store the Generated Code
              */
             $generatedCode = ControllerCodeInjector::injectStoreCode($this->modelName);
-
+            print_r($generatedCode);
             /**
              * Get the current content of the store method And Replace it with the generated code
              */
@@ -166,6 +167,7 @@ class CodeInjector
              */
             $generatedCode = RequestsCodeInjector::injectStoreRequestCode($this->modelName);
 
+            print_r($generatedCode);
             /**
              * Get the current content of the store method And Replace it with the generated code
              */
