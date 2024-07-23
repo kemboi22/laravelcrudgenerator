@@ -1,0 +1,22 @@
+{
+    "name": "kemboielvis/laravel-crud-generator",
+    "description": "A laravel CRUD generator",
+    "type": "library",
+    "license": "MIT",
+    "version": "1.0.0",
+    "autoload": {
+        "psr-4": {
+            "Kemboielvis\\LaravelCrudGenerator\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "kemboi22",
+            "email": "kemboielvis22@gmail.com"
+        }
+    ],
+    "require": {
+        "illuminate/support": "^11.17",
+        "illuminate/database": "^11.17"
+    }
+}
