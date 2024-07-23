@@ -1,0 +1,108 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Http\Requests\Store{{ $modelName }}Request;
+use App\Http\Requests\Update{{ $modelName }}Request;
+use App\Models\{{ $modelName }};
+
+class BursaryController extends Controller
+{
+    /**
+     * Display a listing of the resource.
+     */
+    public function index()
+    {
+        return {{ $modelName }}::all();
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     */
+    public function store(Store{{ $modelName }}Request $request)
+    {
+        try {
+
+        ${{ $modelName }} = {{ $modelName }}::create([
+            {{ $fields }}
+        ]);
+        if (${{ $modelName }}) {
+            return response()->json([
+                'message' => '{{ $modelName }} created successfully',
+                'data' => ${{ $modelName }},
+            ], 201);
+        }
+        return response()->json([
+            'message' => '{{ $modelName }} created successfully',
+        ], 400);
+        } catch (\Exception $e) {
+            return response()->json(['message' => $e->getMessage()], 500);
+        }
+    }
+
+    /**
+     * Display the specified resource.
+     */
+    public function show(string $id)
+    {
+        try {
+            ${{ $modelName }} = {{ $modelName }}::query()->findOrFail($id);
+            if (${{ $modelName }}) {
+                return response()->json([
+                    'message' => '{{ $modelName }} fetched successfully',
+                    'data' => ${{ $modelName }},
+                ]);
+            }
+            return response()->json([
+                'message' => '{{ $modelName }} not found',
+            ], 404);
+        } catch (\Exception $e) {
+            return response()->json(['message' => $e->getMessage()], 500);
+        }
+    }
+
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(Update{{ $modelName }}Request $request, string $id)
+    {
+        try {
+            ${{ $modelName }} = {{ $modelName }}::query()->findOrFail($id);
+            if (${{ $modelName }}) {
+                ${{ $modelName }}->update([
+                    {{ $fields }}
+                ]);
+                return response()->json([
+                    'message' => '{{ $modelName }} updated successfully',
+                    'data' => ${{ $modelName }},
+                ]);
+            }
+            return response()->json([
+                'message' => '{{ $modelName }} not found',
+            ], 404);
+        } catch (\Exception $e) {
+            return response()->json(['message' => $e->getMessage()], 500);
+        }
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function destroy(string $id)
+    {
+        try {
+            ${{ $modelName }} = {{ $modelName }}::query()->findOrFail($id);
+            if (${{ $modelName }}) {
+                ${{ $modelName }}->delete();
+                return response()->json([
+                    'message' => '{{ $modelName }} deleted successfully',
+                ]);
+            }
+            return response()->json([
+                'message' => '{{ $modelName }} not found',
+            ], 404);
+        } catch (\Exception $e) {
+            return response()->json(['message' => $e->getMessage()], 500);
+        }
+    }
+}
