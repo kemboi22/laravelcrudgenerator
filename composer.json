@@ -16,6 +16,7 @@
         }
     ],
     "require": {
+        "php": "^8.0",
         "illuminate/support": "^11.17",
         "illuminate/database": "^11.17",
         "illuminate/console": "^11.17"
