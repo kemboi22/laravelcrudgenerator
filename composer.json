@@ -19,6 +19,23 @@
         "php": "^8.0",
         "illuminate/support": "^11.17",
         "illuminate/database": "^11.17",
-        "illuminate/console": "^11.17"
+        "illuminate/console": "^11.17",
+        "illuminate/filesystem": "^11.17",
+        "illuminate/validation": "^11.17"
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Kemboielvis\\LaravelCrudGenerator\\LaravelCrudGeneratorServiceProvider"
+            ]
+        }
+    },
+    "require-dev": {
+        "orchestra/testbench": "^9.2"
     }
 }
