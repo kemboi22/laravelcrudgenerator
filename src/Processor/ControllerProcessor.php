@@ -7,6 +7,12 @@ use Kemboielvis\LaravelCrudGenerator\Helpers\StubHelper;
 
 class ControllerProcessor
 {
+    /**
+     * Generate a controller
+     *
+     * @param string $model
+     * @return void
+     */
 
     public static function generateController(string $model): void
     {
@@ -48,6 +54,13 @@ class ControllerProcessor
         }
         return implode(",\n", $formattedFields);
     }
+    /**
+     * Replace placeholders in the controller stub
+     *
+     * @param string $stubContent
+     * @param string $modelName
+     * @return string
+     */
 
     protected static function replacePlaceHolders(string $stubContent, string $modelName): string
     {
@@ -57,6 +70,13 @@ class ControllerProcessor
         return str_replace(['{{modelName}}', '{{fields}}'], [$modelName, $fields], $stubContent);
     }
 
+    /**
+     * Save the controller
+     *
+     * @param string $modelName
+     * @param string $controllerContent
+     * @return bool|int
+     */
     protected static function saveController(string $modelName, string $controllerContent): bool|int
     {
         // Check if controller exists
