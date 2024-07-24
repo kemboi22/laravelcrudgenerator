@@ -3,6 +3,9 @@
 namespace Kemboielvis\LaravelCrudGenerator;
 
 use Illuminate\Console\Command;
+use Kemboielvis\LaravelCrudGenerator\Helpers\ModelHelper;
+use Kemboielvis\LaravelCrudGenerator\Processor\ControllerProcessor;
+use Kemboielvis\LaravelCrudGenerator\Processor\RequestProcessor;
 
 class LaravelCrudGenerator extends Command
 {
@@ -11,7 +14,7 @@ class LaravelCrudGenerator extends Command
      *
      * @var string
      */
-    protected $signature = 'crud:generate {name}';
+    protected $signature = 'crud:generate {name?}';
     /**
      * The console command description.
      *
@@ -26,8 +29,22 @@ class LaravelCrudGenerator extends Command
     public function handle()
     {
         $name = $this->argument('name');
+        if ($name)
+        {
+            $this->info('Generating CRUD for ' . $name);
+            ControllerProcessor::generateController($name);
+            RequestProcessor::generateRequest($name);
+        }else{
+            $models = ModelHelper::getModelsInModelDirectory();
+            $this->info('Generating CRUD for all models');
+            foreach ($models as $model) {
+                $this->info('Generating CRUD for ' . $model);
+                ControllerProcessor::generateController($model);
+                RequestProcessor::generateRequest($model);
+            }
+        }
 
-        $this->info('Generating CRUD for ' . $name);
+
     }
 
 }
