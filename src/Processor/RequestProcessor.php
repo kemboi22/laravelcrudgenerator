@@ -14,29 +14,29 @@ class RequestProcessor
      * @param string $modelName
      * @return void
      */
-    public function generateRequest(string $modelName): void
+    public static function generateRequest(string $modelName): void
     {
         $stub = StubHelper::getStub("Request");
         $stubGetContent = file_get_contents($stub);
-        $requestStoreContent = $this->replacePlaceHolders($stubGetContent, $modelName, "Store");
-        if ($this->saveRequest($modelName, $requestStoreContent, "Store")) {
+        $requestStoreContent = self::replacePlaceHolders($stubGetContent, $modelName, "Store");
+        if (self::saveRequest($modelName, $requestStoreContent, "Store")) {
             echo "Store Request created successfully";
         }
-        $requestUpdateContent = $this->replacePlaceHolders($stubGetContent, $modelName, "Update");
-        if ($this->saveRequest($modelName, $requestUpdateContent, "Update")) {
+        $requestUpdateContent = self::replacePlaceHolders($stubGetContent, $modelName, "Update");
+        if (self::saveRequest($modelName, $requestUpdateContent, "Update")) {
             echo "Update Request created successfully";
         }
 
     }
+
     /**
      * Replace placeholders in the request stub
      *
-     * @param string $stubContent
      * @param string $modelName
-     * @return string
+     * @return array
      */
 
-    public function getAttributes(string $modelName): array
+    public static function getAttributes(string $modelName): array
     {
         // Instantiate Model class
         $modelInstance = ModelHelper::instantiateModelClass($modelName);
@@ -69,13 +69,13 @@ class RequestProcessor
     }
 
 
-    public function replacePlaceHolders(string $stubContent, string $rules, string $type): array|string
+    public static function replacePlaceHolders(string $stubContent, string $rules, string $type): array|string
     {
         //Replace Rules placeholder {{ rules }}
         return str_replace(['{{ rules }}', '{{ type }}'], [$rules, $type], $stubContent);
     }
 
-    public function saveRequest(string $modelName, string $requestContent, string $type): bool|int
+    public static function saveRequest(string $modelName, string $requestContent, string $type): bool|int
     {
         // Get request path
         $requestPath = app_path('Http/Requests');
