@@ -31,7 +31,7 @@
     "extra": {
         "laravel": {
             "providers": [
-                "Kemboielvis\\LaravelCrudGenerator\\LaravelCrudGeneratorServiceProvider"
+                "Kemboielvis\\LaravelCrudGenerator\\LaravelCrudServiceProvider"
             ]
         }
     },
