@@ -12,7 +12,7 @@ class StubHelper
      */
     public static function getStub(string $type): bool|string
     {
-        return file_get_contents(__DIR__ . "/../stubs/$type.stub");
+        return file_get_contents(__DIR__ . "/../../stubs/$type.stub");
     }
 
 }
