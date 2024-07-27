@@ -18,9 +18,10 @@ class ControllerProcessor
     {
         $controller = StubHelper::getStub('Controller');
         // Get the content of the controller stub
-        $controllerStubContent = file_get_contents($controller);
+        $controllerStubContent = $controller;
         // Replace placeholders
         $controllerContent = self::replacePlaceHolders($controllerStubContent, $model);
+//        print_r($controllerContent);
         // Save the controller
         self::saveController($model, $controllerContent);
     }
@@ -67,7 +68,7 @@ class ControllerProcessor
         $fields = self::getFields($modelName);
         $fields = self::formatToRequestFields($fields);
         $modelName = ModelHelper::getModelName($modelName);
-        return str_replace(['{{modelName}}', '{{fields}}'], [$modelName, $fields], $stubContent);
+        return str_replace(['{{ $modelName }}', '{{ $fields }}'], [$modelName, $fields], $stubContent);
     }
 
     /**
