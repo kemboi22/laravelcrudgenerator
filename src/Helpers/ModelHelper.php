@@ -78,8 +78,10 @@ class ModelHelper
 
     public static function instantiateModelClass(string $model)
     {
+        $model = "App\\Models\\".$model;
         // Check if the class exists and is a subclass of Model of Eloquent
-        if (class_exists($model) && is_subclass_of($model, Model::class)) {
+        if (class_exists($model, autoload: true) && is_subclass_of($model, Model::class)) {
+            echo "Done";
             return new $model();
         }
         return null;
