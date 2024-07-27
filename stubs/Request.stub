@@ -21,8 +21,6 @@ class {{ $requestType }}{{ $modelName }}Request extends FormRequest
      */
     public function rules(): array
     {
-        return [
-            {{ $fields }}
-        ];
+        return {{ $fields }};
     }
 }

@@ -17,7 +17,7 @@ class RequestProcessor
     public static function generateRequest(string $modelName): void
     {
         $stub = StubHelper::getStub("Request");
-        $stubGetContent = file_get_contents($stub);
+        $stubGetContent = $stub;
         $requestStoreContent = self::replacePlaceHolders($stubGetContent, $modelName, "Store");
         if (self::saveRequest($modelName, $requestStoreContent, "Store")) {
             echo "Store Request created successfully";
@@ -69,10 +69,12 @@ class RequestProcessor
     }
 
 
-    public static function replacePlaceHolders(string $stubContent, string $rules, string $type): array|string
+    public static function replacePlaceHolders(string $stubContent, string $modelName, string $type): array|string
     {
+        $rules = var_export(self::getAttributes($modelName), true);
         //Replace Rules placeholder {{ rules }}
-        return str_replace(['{{ rules }}', '{{ type }}'], [$rules, $type], $stubContent);
+        return str_replace(['{{ $fields }}', '{{ $requestType }}', '{{ $modelName }}'], [$rules, $type, $modelName],
+            $stubContent);
     }
 
     public static function saveRequest(string $modelName, string $requestContent, string $type): bool|int
