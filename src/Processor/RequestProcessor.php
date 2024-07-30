@@ -2,12 +2,14 @@
 
 namespace Kemboielvis\LaravelCrudGenerator\Processor;
 
+use Illuminate\Console\Command;
 use Kemboielvis\LaravelCrudGenerator\Helpers\MigrationHelper;
 use Kemboielvis\LaravelCrudGenerator\Helpers\ModelHelper;
 use Kemboielvis\LaravelCrudGenerator\Helpers\StubHelper;
 
 class RequestProcessor
 {
+
     /**
      * Generate a request
      *
@@ -20,11 +22,11 @@ class RequestProcessor
         $stubGetContent = $stub;
         $requestStoreContent = self::replacePlaceHolders($stubGetContent, $modelName, "Store");
         if (self::saveRequest($modelName, $requestStoreContent, "Store")) {
-            echo "Store Request created successfully";
+            (new Command())->info("Store Request created successfully");
         }
         $requestUpdateContent = self::replacePlaceHolders($stubGetContent, $modelName, "Update");
         if (self::saveRequest($modelName, $requestUpdateContent, "Update")) {
-            echo "Update Request created successfully";
+            (new Command())->info("Update Request created successfully");
         }
 
     }
@@ -73,8 +75,11 @@ class RequestProcessor
     {
         $rules = var_export(self::getAttributes($modelName), true);
         //Replace Rules placeholder {{ rules }}
-        return str_replace(['{{ $fields }}', '{{ $requestType }}', '{{ $modelName }}'], [$rules, $type, $modelName],
-            $stubContent);
+        return str_replace(
+            ['{{ $fields }}', '{{ $requestType }}', '{{ $modelName }}'],
+            [$rules, $type, $modelName],
+            $stubContent
+        );
     }
 
     public static function saveRequest(string $modelName, string $requestContent, string $type): bool|int
