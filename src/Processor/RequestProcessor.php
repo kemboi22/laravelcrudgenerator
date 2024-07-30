@@ -90,10 +90,15 @@ class RequestProcessor
         if (!is_dir($requestPath) && !mkdir($requestPath, 0755, true) && !is_dir($requestPath)) {
             throw new \RuntimeException(sprintf('Directory "%s" was not created', $requestPath));
         }
+        // Create Model Name To Store Request
+        $requestDir = $requestPath . '/' . $modelName;
+        if (!is_dir($requestDir) && !mkdir($requestDir, 0755, true) && !is_dir($requestDir)) {
+            throw new \RuntimeException(sprintf('Directory "%s" was not created', $requestDir));
+        }
         // Get request file name
         $requestFileName = $type.$modelName . 'Request.php';
         // Get request file
-        $requestFile = $requestPath . '/' . $requestFileName;
+        $requestFile = $requestDir . '/' . $requestFileName;
         return file_put_contents($requestFile, $requestContent);
     }
 
