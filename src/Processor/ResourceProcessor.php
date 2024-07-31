@@ -3,6 +3,7 @@
 namespace Kemboielvis\LaravelCrudGenerator\Processor;
 
 use Illuminate\Console\Command;
+use Kemboielvis\LaravelCrudGenerator\Helpers\CommandHelper;
 use Kemboielvis\LaravelCrudGenerator\Helpers\ModelHelper;
 use Kemboielvis\LaravelCrudGenerator\Helpers\StubHelper;
 
@@ -28,7 +29,7 @@ class ResourceProcessor
          * Save the resource
          */
         if (self::saveResource($modelName, $resourceContent)) {
-            (new Command())->info("Resource created successfully");
+            (new CommandHelper())->info("Resource created successfully");
         }
     }
     /**
