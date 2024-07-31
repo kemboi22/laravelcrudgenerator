@@ -19,6 +19,6 @@ class CommandHelper
     public function info(string $message): void
     {
         // Print the message with blue background and move to the next line
-        echo self::BLUE_BG . "[INFO]: " . self::RESET. $message . PHP_EOL. "\n";
+        echo self::BLUE_BG . "[INFO]" . self::RESET. $message . PHP_EOL. "\n";
     }
 }
