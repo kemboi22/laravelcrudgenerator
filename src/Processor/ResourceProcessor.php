@@ -46,10 +46,15 @@ class ResourceProcessor
          * Get the attributes
          */
         $attributes = self::getAttributes($modelName);
+
         /**
-         * Get the fields
+         * format attributes to string
          */
-        $fields = var_export($attributes, true);
+        $fields = "[\n";
+        foreach ($attributes as $key => $value) {
+            $fields .= "\t\t\t'$key' => $value,\n";
+        }
+        $fields .= "\t\t]";
         /**
          * Replace the placeholders
          */
@@ -82,6 +87,10 @@ class ResourceProcessor
          */
         $resource = [];
         foreach ($fillables as $fillable) {
+            /**
+             * Add fillable to resource array
+             * $this returns array values with string ''
+             */
             $resource[$fillable] = "\$this->$fillable";
         }
         /**
@@ -126,7 +135,7 @@ class ResourceProcessor
         /**
          * Create the file path
          */
-        $filePath = $resourcePath . "/$modelName.php";
+        $filePath = $resourcePath . "/$modelName"."Resource.php";
         /**
          * Save the content to the file
          */
