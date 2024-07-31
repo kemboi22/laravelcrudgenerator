@@ -14,8 +14,6 @@ class {{ $modelName }}Resource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        return [
-            {{ $fields }}
-        ];
+        return {{ $fields }};
     }
 }
