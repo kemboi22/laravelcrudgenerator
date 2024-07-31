@@ -10,11 +10,6 @@ use Kemboielvis\LaravelCrudGenerator\Helpers\StubHelper;
 
 class RequestProcessor
 {
-    protected static CommandHelper $command;
-    public function __construct()
-    {
-        $this->command = new CommandHelper();
-    }
 
     /**
      * Generate a request
@@ -28,11 +23,11 @@ class RequestProcessor
         $stubGetContent = $stub;
         $requestStoreContent = self::replacePlaceHolders($stubGetContent, $modelName, "Store");
         if (self::saveRequest($modelName, $requestStoreContent, "Store")) {
-            self::$command->info("Store Request created successfully");
+            (new CommandHelper())->info("Store Request created successfully");
         }
         $requestUpdateContent = self::replacePlaceHolders($stubGetContent, $modelName, "Update");
         if (self::saveRequest($modelName, $requestUpdateContent, "Update")) {
-            self::$command->info("Update Request created successfully");
+            (new CommandHelper())->info("Update Request created successfully");
         }
 
     }
@@ -79,8 +74,22 @@ class RequestProcessor
 
     public static function replacePlaceHolders(string $stubContent, string $modelName, string $type): array|string
     {
+        /**
+         * Get the attributes
+         */
         $rules = var_export(self::getAttributes($modelName), true);
-        //Replace Rules placeholder {{ rules }}
+        /**
+         * format array to be [] instead of array()
+         */
+        $rules = str_replace(array('array (', ')'), array('[', ']'), $rules);
+        /**
+         * Trim it to be correctly formated
+         */
+        $rules = rtrim($rules, " \t\n\r\0\x0B");
+
+        /**
+         * Replace the placeholders
+         */
         return str_replace(
             ['{{ $fields }}', '{{ $requestType }}', '{{ $modelName }}'],
             [$rules, $type, $modelName],
