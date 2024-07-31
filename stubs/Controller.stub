@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\Store{{ $modelName }}Request;
-use App\Http\Requests\Update{{ $modelName }}Request;
+use App\Http\Requests\{{ $modelName }}\Store{{ $modelName }}Request;
+use App\Http\Requests\{{ $modelName }}\Update{{ $modelName }}Request;
 use App\Models\{{ $modelName }};
 
-class BursaryController extends Controller
+class {{ $modelName }}Controller extends Controller
 {
     /**
      * Display a listing of the resource.
