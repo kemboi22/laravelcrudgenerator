@@ -3,12 +3,18 @@
 namespace Kemboielvis\LaravelCrudGenerator\Processor;
 
 use Illuminate\Console\Command;
+use Kemboielvis\LaravelCrudGenerator\Helpers\CommandHelper;
 use Kemboielvis\LaravelCrudGenerator\Helpers\MigrationHelper;
 use Kemboielvis\LaravelCrudGenerator\Helpers\ModelHelper;
 use Kemboielvis\LaravelCrudGenerator\Helpers\StubHelper;
 
 class RequestProcessor
 {
+    protected static CommandHelper $command;
+    public function __construct()
+    {
+        $this->command = new CommandHelper();
+    }
 
     /**
      * Generate a request
@@ -22,11 +28,11 @@ class RequestProcessor
         $stubGetContent = $stub;
         $requestStoreContent = self::replacePlaceHolders($stubGetContent, $modelName, "Store");
         if (self::saveRequest($modelName, $requestStoreContent, "Store")) {
-            (new Command())->info("Store Request created successfully");
+            self::$command->info("Store Request created successfully");
         }
         $requestUpdateContent = self::replacePlaceHolders($stubGetContent, $modelName, "Update");
         if (self::saveRequest($modelName, $requestUpdateContent, "Update")) {
-            (new Command())->info("Update Request created successfully");
+            self::$command->info("Update Request created successfully");
         }
 
     }
