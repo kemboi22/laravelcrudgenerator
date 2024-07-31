@@ -6,6 +6,7 @@ use Illuminate\Console\Command;
 use Kemboielvis\LaravelCrudGenerator\Helpers\ModelHelper;
 use Kemboielvis\LaravelCrudGenerator\Processor\ControllerProcessor;
 use Kemboielvis\LaravelCrudGenerator\Processor\RequestProcessor;
+use Kemboielvis\LaravelCrudGenerator\Processor\ResourceProcessor;
 
 class LaravelCrudGenerator extends Command
 {
@@ -31,9 +32,10 @@ class LaravelCrudGenerator extends Command
         $name = $this->argument('name');
         if ($name)
         {
-            $this->info('Generating CRUD for ' . $name);
+            $this->info('Generating CRUD for ' . $name. "\n");
             ControllerProcessor::generateController($name);
             RequestProcessor::generateRequest($name);
+            ResourceProcessor::generateResource($name);
         }else{
             $models = ModelHelper::getModelsInModelDirectory();
             $this->info('Generating CRUD for all models');
@@ -41,6 +43,7 @@ class LaravelCrudGenerator extends Command
                 $this->info('Generating CRUD for ' . $model);
                 ControllerProcessor::generateController($model);
                 RequestProcessor::generateRequest($model);
+                ResourceProcessor::generateResource($model);
             }
         }
 
