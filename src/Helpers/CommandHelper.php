@@ -6,22 +6,19 @@ use Illuminate\Console\Command;
 
 class CommandHelper
 {
-    protected Command $command;
+    // ANSI escape codes for colors
+    private const BLUE_BG = "\033[44m";
+    private const RESET = "\033[0m";
 
-    public function __construct()
-    {
-        $this->command = new class extends Command {
-            public function handle()
-            {
-
-            }
-
-        };
-    }
-
+    /**
+     * Display a message with a blue background
+     *
+     * @param string $message
+     * @return void
+     */
     public function info(string $message): void
     {
-        $this->command->info($message);
+        // Print the message with blue background and move to the next line
+        echo self::BLUE_BG . "[INFO]: " . self::RESET. $message . PHP_EOL. "\n";
     }
-
 }
