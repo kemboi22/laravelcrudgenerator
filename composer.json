@@ -3,7 +3,6 @@
     "description": "A laravel CRUD generator",
     "type": "library",
     "license": "MIT",
-    "version": "1.0.0",
     "autoload": {
         "psr-4": {
             "Kemboielvis\\LaravelCrudGenerator\\": "src/"
