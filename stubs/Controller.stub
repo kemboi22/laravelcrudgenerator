@@ -13,7 +13,7 @@ class {{ $modelName }}Controller extends Controller
      */
     public function index()
     {
-        return {{ $modelName }}::all();
+        return {{ $modelName }}Resource::collection({{ $modelName }}::all());
     }
 
     /**
@@ -29,7 +29,7 @@ class {{ $modelName }}Controller extends Controller
         if (${{ $modelName }}) {
             return response()->json([
                 'message' => '{{ $modelName }} created successfully',
-                'data' => ${{ $modelName }},
+                'data' => new {{ $modelName }}Resource(${{ $modelName }}),
             ], 201);
         }
         return response()->json([
@@ -50,7 +50,7 @@ class {{ $modelName }}Controller extends Controller
             if (${{ $modelName }}) {
                 return response()->json([
                     'message' => '{{ $modelName }} fetched successfully',
-                    'data' => ${{ $modelName }},
+                    'data' => new {{ $modelName }}Resource(${{ $modelName }}),
                 ]);
             }
             return response()->json([
@@ -74,7 +74,7 @@ class {{ $modelName }}Controller extends Controller
                 ]);
                 return response()->json([
                     'message' => '{{ $modelName }} updated successfully',
-                    'data' => ${{ $modelName }},
+                    'data' => new {{ $modelName }}Resource(${{ $modelName }}),
                 ]);
             }
             return response()->json([
