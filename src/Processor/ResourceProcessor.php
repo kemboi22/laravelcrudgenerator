@@ -3,6 +3,7 @@
 namespace Kemboielvis\LaravelCrudGenerator\Processor;
 
 use Illuminate\Console\Command;
+use Illuminate\Support\Str;
 use Kemboielvis\LaravelCrudGenerator\Helpers\CommandHelper;
 use Kemboielvis\LaravelCrudGenerator\Helpers\ModelHelper;
 use Kemboielvis\LaravelCrudGenerator\Helpers\StubHelper;
@@ -52,7 +53,8 @@ class ResourceProcessor
          */
         $fields = "[\n";
         foreach ($attributes as $key => $value) {
-            $fields .= "\t\t\t'$key' => $value,\n";
+            $camelKey = Str::camel($key);
+            $fields .= "\t\t\t'$camelKey' => $value,\n";
         }
         $fields .= "\t\t]";
         /**
