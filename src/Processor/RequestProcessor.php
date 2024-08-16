@@ -55,19 +55,6 @@ class RequestProcessor
         foreach ($fillables as $fillable) {
             $rules[$fillable] = 'required';
         }
-
-        // Loop through migration content
-//        foreach ($migrationContent as $migration) {
-//            foreach ($migration as $column) {
-//                // If the column is already in rules (from fillables), merge required/nullable condition
-//                if (isset($rules[$column['name']])) {
-//                    $rules[$column['name']] = $column['required'] ? 'required' : 'nullable';
-//                } else {
-//                    $rules[$column['name']] = $column['required'] ? 'required' : 'nullable';
-//                }
-//            }
-//        }
-
         return $rules;
     }
 
