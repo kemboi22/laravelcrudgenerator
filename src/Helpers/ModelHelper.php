@@ -38,17 +38,17 @@ class ModelHelper
                 // Get the class name
                 $className = self::getClassNameFromFile($file);
                 // Check if the class exists
-                if (class_exists($className)) {
+                if (class_exists($className['class'])) {
                     // Add the class to the models array
-                    $models[] = $className;
+                    $models[] = $className['model'];
                 }
-
             }
         }
+
         return $models;
     }
 
-    protected static function getClassNameFromFile(SplFileInfo $file): string
+    protected static function getClassNameFromFile(SplFileInfo $file): array
     {
         // Get File content
         $fileName = $file->getFilenameWithoutExtension();
@@ -60,7 +60,11 @@ class ModelHelper
         if ($namespace) {
             $className = $namespace . '\\' . $fileName;
         }
-        return $className;
+
+        return [
+            'class' => $className,
+            'model' => $fileName,
+        ];
     }
 
     private static function getNamespaceFromFile(SplFileInfo $file): string
@@ -73,17 +77,18 @@ class ModelHelper
         if (preg_match('/namespace (.*);/', $content, $matches)) {
             $namespace = $matches[1];
         }
+
         return $namespace;
     }
 
     public static function instantiateModelClass(string $model)
     {
-        $model = "App\\Models\\".$model;
+        $model = 'App\\Models\\' . $model;
         // Check if the class exists and is a subclass of Model of Eloquent
         if (class_exists($model, autoload: true) && is_subclass_of($model, Model::class)) {
             return new $model();
         }
+
         return null;
     }
-
 }

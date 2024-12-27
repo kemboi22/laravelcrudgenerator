@@ -39,7 +39,8 @@ class LaravelCrudGenerator extends Command
             $models = ModelHelper::getModelsInModelDirectory();
             $this->info('Generating CRUD for all models');
             foreach ($models as $model) {
-                $this->info('Generating CRUD for ' . $model);
+                
+                $this->info('Generating CRUD for ' . $model . "\n");
                 ControllerProcessor::generateController($model);
                 RequestProcessor::generateRequest($model);
                 ResourceProcessor::generateResource($model);
