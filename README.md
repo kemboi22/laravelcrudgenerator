@@ -30,7 +30,7 @@ The code will be generated in the following directories:
 
 ## Warning 
 
-When using this code generator you should be careful because it will overwrite the existing files.
+When using this code generator you should be careful because it will overwrite the existing files and written code
 
 # License
 The Laravel CRUD Generator is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
