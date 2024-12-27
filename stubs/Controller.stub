@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\{{ $modelName }}\Store{{ $modelName }}Request;
 use App\Http\Requests\{{ $modelName }}\Update{{ $modelName }}Request;
 use App\Models\{{ $modelName }};
+use App\Http\Resources\{{ $modelName }}\{{ $modelName }}Resource;
 
 class {{ $modelName }}Controller extends Controller
 {

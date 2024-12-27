@@ -30,21 +30,41 @@ class LaravelCrudGenerator extends Command
     public function handle()
     {
         $name = $this->argument('name');
+
         if ($name) {
-            $this->info('Generating CRUD for ' . $name . "\n");
-            ControllerProcessor::generateController($name);
-            RequestProcessor::generateRequest($name);
-            ResourceProcessor::generateResource($name);
+            $this->info('Starting CRUD generation for: ' . $name);
+
+            $this->generateCRUD($name);
+
+            $this->info('CRUD generation completed for: ' . $name);
         } else {
             $models = ModelHelper::getModelsInModelDirectory();
-            $this->info('Generating CRUD for all models');
-            foreach ($models as $model) {
-                
-                $this->info('Generating CRUD for ' . $model . "\n");
-                ControllerProcessor::generateController($model);
-                RequestProcessor::generateRequest($model);
-                ResourceProcessor::generateResource($model);
+
+            if ($this->confirm('Do you want to generate CRUD for all models?')) {
+                $this->info('Found ' . count($models) . ' models to process.');
+
+                foreach ($models as $index => $model) {
+                    $this->info('[Processing] (' . ($index + 1) . '/' . count($models) . ') Generating CRUD for: ' . $model);
+
+                    $this->generateCRUD($model);
+
+                    $this->info('[Success] CRUD generated for: ' . $model);
+                }
+
+                $this->info('CRUD generation completed for all models.');
+            } else {
+                $this->warn('Operation aborted by the user.');
             }
         }
+    }
+
+    /**
+     *  Generate CRUD files for given model
+     */
+    protected function generateCRUD(string $model)
+    {
+        ControllerProcessor::generateController($model);
+        RequestProcessor::generateRequest($model);
+        ResourceProcessor::generateResource($model);
     }
 }
