@@ -44,13 +44,13 @@ class ResourceProcessor
          * format attributes to string
          */
         $fields = "[\n";
-        $fields .= "\t\t\t'id' => \$this->id";
+        $fields .= "\t\t\t'id' => \$this->id, \n";
         foreach ($attributes as $key => $value) {
             $camelKey = Str::camel($key);
             $fields .= "\t\t\t'$camelKey' => $value,\n";
         }
-        $fields .= "\t\t\t'createdAt' => \$this->created_at";
-        $fields .= "\t\t\t'updatedAt' => \$this->updated_at";
+        $fields .= "\t\t\t'createdAt' => \$this->created_at,\n";
+        $fields .= "\t\t\t'updatedAt' => \$this->updated_at,\n";
         $fields .= "\t\t]";
 
         /**
