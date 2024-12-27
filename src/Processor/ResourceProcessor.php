@@ -2,7 +2,6 @@
 
 namespace Kemboielvis\LaravelCrudGenerator\Processor;
 
-use Illuminate\Console\Command;
 use Illuminate\Support\Str;
 use Kemboielvis\LaravelCrudGenerator\Helpers\CommandHelper;
 use Kemboielvis\LaravelCrudGenerator\Helpers\ModelHelper;
@@ -12,16 +11,13 @@ class ResourceProcessor
 {
     /**
      * Generate a resource
-     *
-     * @param string $modelName
-     * @return void
      */
     public static function generateResource(string $modelName): void
     {
         /**
          * Get the resource stub
          */
-        $stubContent = StubHelper::getStub("Resource");
+        $stubContent = StubHelper::getStub('Resource');
         /**
          * Replace placeholders in the resource stub
          */
@@ -30,17 +26,13 @@ class ResourceProcessor
          * Save the resource
          */
         if (self::saveResource($modelName, $resourceContent)) {
-            (new CommandHelper())->info("Resource created successfully");
+            (new CommandHelper())->info('Resource created successfully');
         }
     }
+
     /**
      * Replace placeholders in the resource stub
-     *
-     * @param string $stubContent
-     * @param string $modelName
-     * @return string
      */
-
     private static function replacePlaceHolders(string $modelName, string $stubContent): string
     {
         /**
@@ -52,28 +44,24 @@ class ResourceProcessor
          * format attributes to string
          */
         $fields = "[\n";
+        $fields .= "\t\t\t'id' => \$this->id";
         foreach ($attributes as $key => $value) {
             $camelKey = Str::camel($key);
             $fields .= "\t\t\t'$camelKey' => $value,\n";
         }
+        $fields .= "\t\t\t'createdAt' => \$this->created_at";
+        $fields .= "\t\t\t'updatedAt' => \$this->updated_at";
         $fields .= "\t\t]";
+
         /**
          * Replace the placeholders
          */
-        return str_replace(
-            ['{{ $modelName }}', '{{ $fields }}'],
-            [$modelName, $fields],
-            $stubContent
-        );
+        return str_replace(['{{ $modelName }}', '{{ $fields }}'], [$modelName, $fields], $stubContent);
     }
 
     /**
      * Get the attributes
-     *
-     * @param string $modelName
-     * @return array
      */
-
     private static function getAttributes(string $modelName): array
     {
         /**
@@ -95,6 +83,7 @@ class ResourceProcessor
              */
             $resource[$fillable] = "\$this->$fillable";
         }
+
         /**
          * Return resource array
          */
@@ -103,17 +92,13 @@ class ResourceProcessor
 
     /**
      * Save the Resource
-     *
-     * @param string $modelName
-     * @param string $content
-     * @return bool
      */
     private static function saveResource(string $modelName, string $content): bool
     {
         /**
          * Get the resources path
          */
-        $resourcePath = app_path("Http/Resources");
+        $resourcePath = app_path('Http/Resources');
         /**
          * Ensure the directory exists
          * If not create it
@@ -137,11 +122,11 @@ class ResourceProcessor
         /**
          * Create the file path
          */
-        $filePath = $resourcePath . "/$modelName"."Resource.php";
+        $filePath = $resourcePath . "/$modelName" . 'Resource.php';
+
         /**
          * Save the content to the file
          */
         return file_put_contents($filePath, $content);
     }
-
 }

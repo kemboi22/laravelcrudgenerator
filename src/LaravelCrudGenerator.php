@@ -16,9 +16,9 @@ class LaravelCrudGenerator extends Command
      * @var string
      */
     protected $signature = 'crud:generate {name?}';
+
     /**
      * The console command description.
-     *
      */
     protected $description = 'Generate CRUD operations for a given model';
 
@@ -30,13 +30,12 @@ class LaravelCrudGenerator extends Command
     public function handle()
     {
         $name = $this->argument('name');
-        if ($name)
-        {
-            $this->info('Generating CRUD for ' . $name. "\n");
+        if ($name) {
+            $this->info('Generating CRUD for ' . $name . "\n");
             ControllerProcessor::generateController($name);
             RequestProcessor::generateRequest($name);
             ResourceProcessor::generateResource($name);
-        }else{
+        } else {
             $models = ModelHelper::getModelsInModelDirectory();
             $this->info('Generating CRUD for all models');
             foreach ($models as $model) {
@@ -46,8 +45,5 @@ class LaravelCrudGenerator extends Command
                 ResourceProcessor::generateResource($model);
             }
         }
-
-
     }
-
 }
