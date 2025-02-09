@@ -2,6 +2,8 @@
 
 namespace Kemboielvis\LaravelCrudGenerator\Processor;
 
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 use Kemboielvis\LaravelCrudGenerator\Helpers\ModelHelper;
 use Kemboielvis\LaravelCrudGenerator\Helpers\StubHelper;
 
@@ -21,12 +23,12 @@ class ControllerProcessor
         $controllerStubContent = $controller;
         // Replace placeholders
         $controllerContent = self::replacePlaceHolders($controllerStubContent, $model);
-//        print_r($controllerContent);
+        //        print_r($controllerContent);
         // Save the controller
         self::saveController($model, $controllerContent);
     }
     /**
-     * Get the fields of a model
+    * Get the fields of a model
      *
      * @param string $modelName
      * @return array
@@ -66,9 +68,10 @@ class ControllerProcessor
     protected static function replacePlaceHolders(string $stubContent, string $modelName): string
     {
         $fields = self::getFields($modelName);
+        $lowerCaseModelName = Str::lower($modelName);
         $fields = self::formatToRequestFields($fields);
         $modelName = ModelHelper::getModelName($modelName);
-        return str_replace(['{{ $modelName }}', '{{ $fields }}'], [$modelName, $fields], $stubContent);
+        return str_replace(['{{ $modelName }}', '{{ $fields }}'], [$lowerCaseModelName, $fields], $stubContent);
     }
 
     /**
